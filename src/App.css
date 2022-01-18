@@ -1,0 +1,35 @@
+.mainBody {
+  margin-top: 20px;
+}
+
+.badge {
+  margin-left: 10px;
+}
+
+.done {
+  color: #697582;
+  text-decoration: line-through;
+  font-weight: 400;
+}
+
+.login {
+  width: 360px; /* this is needed */
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5rem;
+}
+
+.login-msg {
+  text-align: center;
+}
+
+.login button {
+  float: right;
+}
+
+.login-logo {
+  font-size: 2.1rem;
+  font-weight: 300;
+  margin-bottom: 0.9rem;
+  text-align: center;
+}
