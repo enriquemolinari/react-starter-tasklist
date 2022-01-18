@@ -1,18 +1,16 @@
-# Progressive Web App (React): Task List
+# Starter Task List React App
 
 ![pwa-task-screenshot](https://user-images.githubusercontent.com/11150895/149962394-3423124c-8d6c-4326-8164-b861c0d4f39b.png)
 
-Task List is a **Progressive Web App** built with React as part of my book [Implementing PWA with React](https://leanpub.com/understandingreact) (not yet published).
+The Starter Task List React App is a **React** application that we will use during the learning path in my book [Implementing PWA with React](https://leanpub.com/understandingreact) (not yet published), to transform it into a PWA.
 
 It requires to have it running two services I have wrote: [UserAuth](https://github.com/enriquemolinari/userauth) and [TaskList](https://github.com/enriquemolinari/tasklist). Both services are pretty easy to start, with minimal dependencies.
 
 ## Install and Start
 
-- git clone https://github.com/enriquemolinari/react-tasklist.git react-tasklist
-- cd react-tasklist
+- git clone https://github.com/enriquemolinari/react-starter-tasklist.git react-starter-tasklist
+- cd react-starter-tasklist
 - npm install
-- npm run build
-- serve -s build (service worker is only enabled in production environment)
 
 ## Users
 
