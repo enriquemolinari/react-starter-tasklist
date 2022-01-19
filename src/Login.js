@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
 import { useHistory } from "react-router-dom";
-import User from "./User";
+import { users as usersService } from "./server/users.js";
 
 export default function Login(props) {
   const [loginForm, setLoginForm] = useState({
@@ -32,7 +32,7 @@ export default function Login(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    new User(props.apiGwUrl)
+    usersService
       .login(loginForm.username, loginForm.password)
       .then((v) => {
         setErrorResponse({

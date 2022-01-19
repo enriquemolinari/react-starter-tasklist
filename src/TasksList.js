@@ -7,17 +7,15 @@ import Badge from "react-bootstrap/Badge";
 import Modal from "react-bootstrap/Modal";
 import Alert from "react-bootstrap/Alert";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import AddTask from "./AddTask";
-import User from "./User";
+import { tasks as tasksService } from "./server/tasks.js";
 
 export default function TasksList(props) {
   const [tasks, setTasks] = useState({ tasks: [] });
   const [show, setShow] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+  const [error, setError] = useState(null);
   const [showAddTask, setShowAddTask] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(0);
-  const history = useHistory();
 
   let status = {
     DANGER: "danger",
@@ -31,25 +29,12 @@ export default function TasksList(props) {
   }, []);
 
   function retrieveTasks() {
-    fetch(props.apiGwUrl + "/tasks", {
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.status === 401) {
-          User.current(props.apiGwUrl)
-            .logout()
-            .then(() => history.push("/login"));
-          return { tasks: [] };
-        } else {
-          if (response.status !== 200) {
-            setShowAlert(true);
-            return { tasks: [] };
-          }
-        }
-        return response.json();
-      })
-      .then((json) => {
-        setTasks(json);
+    tasksService
+      .retrieveAll()
+      .then((json) => setTasks(json))
+      .catch((error) => {
+        setError(error);
+        return { tasks: [] };
       });
   }
 
@@ -58,7 +43,7 @@ export default function TasksList(props) {
   }
 
   function handleErrorAddTasks() {
-    setShowAlert(true);
+    setError("Something when wrong adding the task.");
   }
 
   function handleConfirmAddTask() {
@@ -81,56 +66,29 @@ export default function TasksList(props) {
 
   function handleDelete() {
     setShow(false);
-    fetch(props.apiGwUrl + "/tasks", {
-      method: "DELETE",
-      credentials: "include",
-      body: JSON.stringify({
-        idTask: taskToDelete,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((r) => {
-        if (!r.ok) throw Error(r.status);
-        return r.json();
-      })
+    tasksService
+      .delete(taskToDelete)
       .then(() => retrieveTasks())
-      .catch((e) => setShowAlert(true));
+      .catch((e) => setError(e));
   }
 
   function handleDoneOrUnDone(e, done, idTask) {
-    let uri = props.apiGwUrl + "/tasks/done";
-    if (done) uri = props.apiGwUrl + "/tasks/inprogress";
-
-    fetch(uri, {
-      method: "PUT",
-      credentials: "include",
-      body: JSON.stringify({
-        idTask: idTask,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((r) => {
-        if (!r.ok) throw Error(r.status);
-        return r.json();
-      })
+    tasksService
+      .doneOrUndone(done, idTask)
       .then(() => retrieveTasks())
-      .catch((e) => setShowAlert(true));
+      .catch((e) => setError(e));
   }
 
   return (
     <Container fluid className="mainBody">
       <Alert
-        show={showAlert}
+        show={error}
         variant="danger"
-        onClose={() => setShowAlert(false)}
+        onClose={() => setError(null)}
         dismissible="true"
       >
         <Alert.Heading>Ops...</Alert.Heading>
-        <p>Shomething when wrong...</p>
+        <p>{error}</p>
       </Alert>
 
       <Card>

@@ -1,31 +1,24 @@
-const STOREUNAME = "username";
-const STOREUROLES = "roles";
-const STOREUID = "id";
+export let users = (function () {
+  const apiAuth = process.env.REACT_APP_URI_AUTH;
+  const STOREUNAME = "username";
+  const STOREUROLES = "roles";
+  const STOREUID = "id";
 
-export default class User {
-  constructor(apiUrl) {
-    this.apiUrl = apiUrl;
-  }
-
-  userId() {
+  function userId() {
     return sessionStorage.getItem(STOREUID);
   }
 
-  userName() {
+  function userName() {
     return sessionStorage.getItem(STOREUNAME);
   }
 
-  hasRole(role) {
+  function hasRole(role) {
     let userRoles = sessionStorage.getItem(STOREUROLES);
     return role.includes(userRoles);
   }
 
-  static current(apiUrl) {
-    return new User(apiUrl);
-  }
-
-  logout() {
-    return fetch(this.apiUrl + "/logout", {
+  function logout() {
+    return fetch(apiAuth + "/logout", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -39,8 +32,8 @@ export default class User {
       });
   }
 
-  login(userName, password) {
-    return fetch(this.apiUrl + "/login", {
+  function login(userName, password) {
+    return fetch(apiAuth + "/login", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify({
@@ -74,4 +67,12 @@ export default class User {
         }
       });
   }
-}
+
+  return {
+    login: login,
+    logout: logout,
+    userId: userId,
+    userName: userName,
+    hasRole: hasRole,
+  };
+})();

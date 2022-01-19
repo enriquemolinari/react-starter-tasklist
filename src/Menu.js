@@ -2,18 +2,15 @@ import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { Link, useHistory } from "react-router-dom";
-import User from "./User";
-import PrivateRoute from "./PrivateRoute";
+import { users as usersService } from "./server/users.js";
 
 export default function Menu(props) {
-  const userName = User.current().userName();
+  const userName = usersService.userName();
   const history = useHistory();
 
   function handleLogout(e) {
     e.preventDefault();
-    User.current(props.apiGwUrl)
-      .logout()
-      .then(() => history.push("/login"));
+    usersService.logout().then(() => history.push("/login"));
   }
 
   return (
@@ -25,10 +22,7 @@ export default function Menu(props) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link href="#">
-            <PrivateRoute
-              component={<Link to="/tasklist">Task List</Link>}
-              requiredRoles={["SIMPLE", "ADMIN"]}
-            ></PrivateRoute>
+            <Link to="/tasklist">Task List</Link>
           </Nav.Link>
         </Nav>
         <Nav>

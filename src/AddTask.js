@@ -2,6 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import { tasks as tasksService } from "./server/tasks.js";
 
 export default function AddTask(props) {
   const [inputsValue, setInputsValue] = useState({
@@ -13,21 +14,8 @@ export default function AddTask(props) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    fetch(props.apiGwUrl + "/tasks", {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify({
-        expirationDate: inputsValue.expirationDate,
-        taskText: inputsValue.taskText,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((r) => {
-        if (!r.ok) throw Error(r.status);
-        return r.json();
-      })
+    tasksService
+      .addNew(inputsValue.expirationDate, inputsValue.taskText)
       .then((json) => {
         if (json.result === "error") {
           setFormErrors(json.message);
@@ -41,9 +29,7 @@ export default function AddTask(props) {
           props.handleAddTask();
         }
       })
-      .catch((e) => {
-        props.handleErrorAddTasks();
-      });
+      .catch((error) => props.handleErrorAddTasks());
   }
 
   function handleChange(e) {

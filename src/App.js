@@ -7,27 +7,20 @@ import Menu from "./Menu";
 import Login from "./Login";
 import Welcome from "./Welcome";
 import { Route } from "react-router-dom";
-import PrivateRoute from "./PrivateRoute";
 
 function App() {
-  const apiAuth = process.env.REACT_APP_URI_AUTH;
-  const apiTask = process.env.REACT_APP_URI_TASK;
-
   return (
     <>
       <Route exact path={"/"}>
-        <Menu apiGwUrl={apiAuth} />
+        <Menu />
         <Welcome />
       </Route>
       <Route exact path={"/tasklist"}>
-        <Menu apiGwUrl={apiAuth} />
-        <PrivateRoute
-          component={<TasksList apiGwUrl={apiTask} />}
-          requiredRoles={["SIMPLE", "ADMIN"]}
-        />
+        <Menu />
+        <TasksList />
       </Route>
       <Route exact path={"/login"}>
-        <Login apiGwUrl={apiAuth} />
+        <Login />
       </Route>
     </>
   );
