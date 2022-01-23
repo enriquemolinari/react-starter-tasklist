@@ -5,15 +5,15 @@ export let users = (function () {
   const STOREUID = "id";
 
   function userId() {
-    return sessionStorage.getItem(STOREUID);
+    return localStorage.getItem(STOREUID);
   }
 
   function userName() {
-    return sessionStorage.getItem(STOREUNAME);
+    return localStorage.getItem(STOREUNAME);
   }
 
   function hasRole(role) {
-    let userRoles = sessionStorage.getItem(STOREUROLES);
+    let userRoles = localStorage.getItem(STOREUROLES);
     return role.includes(userRoles);
   }
 
@@ -27,7 +27,7 @@ export let users = (function () {
     })
       .then((response) => response.json())
       .then((json) => {
-        sessionStorage.clear();
+        localStorage.clear();
         return Promise.resolve();
       });
   }
@@ -55,9 +55,9 @@ export let users = (function () {
       })
       .then((json) => {
         if (json.result === "success") {
-          sessionStorage.setItem(STOREUNAME, json.user.name);
-          sessionStorage.setItem(STOREUROLES, json.user.roles);
-          sessionStorage.setItem(STOREUID, json.user.id);
+          localStorage.setItem(STOREUNAME, json.user.name);
+          localStorage.setItem(STOREUROLES, json.user.roles);
+          localStorage.setItem(STOREUID, json.user.id);
           return Promise.resolve();
         } else {
           return Promise.reject({

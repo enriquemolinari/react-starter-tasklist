@@ -42,8 +42,8 @@ export default function TasksList(props) {
     setShowAddTask(true);
   }
 
-  function handleErrorAddTasks() {
-    setError("Something when wrong adding the task.");
+  function handleErrorAddTasks(msg) {
+    setError(msg);
   }
 
   function handleConfirmAddTask() {
@@ -69,14 +69,14 @@ export default function TasksList(props) {
     tasksService
       .delete(taskToDelete)
       .then(() => retrieveTasks())
-      .catch((e) => setError(e));
+      .catch((e) => setError(e.msg));
   }
 
   function handleDoneOrUnDone(e, done, idTask) {
     tasksService
       .doneOrUndone(done, idTask)
       .then(() => retrieveTasks())
-      .catch((e) => setError(e));
+      .catch((e) => setError(e.msg));
   }
 
   return (

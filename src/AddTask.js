@@ -17,19 +17,18 @@ export default function AddTask(props) {
     tasksService
       .addNew(inputsValue.expirationDate, inputsValue.taskText)
       .then((json) => {
-        if (json.result === "error") {
-          setFormErrors(json.message);
-        } else {
-          setInputsValue({
-            expirationDate: "",
-            taskText: "",
-          });
-          setFormErrors({});
-          props.handleCloseAddTask();
-          props.handleAddTask();
-        }
+        setInputsValue({
+          expirationDate: "",
+          taskText: "",
+        });
+        setFormErrors({});
+        props.handleCloseAddTask();
+        props.handleAddTask();
       })
-      .catch((error) => props.handleErrorAddTasks());
+      .catch((error) => {
+        console.log(error);
+        props.handleErrorAddTasks(error.msg);
+      });
   }
 
   function handleChange(e) {

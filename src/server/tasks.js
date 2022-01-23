@@ -16,6 +16,11 @@ export let tasks = (function () {
       },
     })
       .then((r) => {
+        if (r.status === 401)
+          return Promise.reject({
+            status: 401,
+            msg: "You are not authenticated",
+          });
         if (!r.ok) return Promise.reject(r.status);
         return r.json();
       })
@@ -54,11 +59,16 @@ export let tasks = (function () {
       },
     })
       .then((r) => {
+        if (r.status === 401)
+          return Promise.reject({
+            status: 401,
+            msg: "You are not authenticated",
+          });
         if (!r.ok) return Promise.reject("Something when wrong.");
         return r.json();
       })
       .then((json) => Promise.resolve(json))
-      .catch((e) => Promise.reject("Something when wrong."));
+      .catch((e) => Promise.reject(e));
   }
 
   function add(expirationDate, text) {
@@ -74,13 +84,16 @@ export let tasks = (function () {
       },
     })
       .then((r) => {
+        if (r.status === 401)
+          return Promise.reject({
+            status: 401,
+            msg: "You are not authenticated",
+          });
         if (!r.ok) Promise.reject(r.status);
         return r.json();
       })
       .then((json) => Promise.resolve(json))
-      .catch((e) => {
-        Promise.reject(e);
-      });
+      .catch((e) => Promise.reject(e));
   }
 
   return {
