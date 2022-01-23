@@ -63,7 +63,7 @@ export default function AddTask(props) {
             name="taskText"
             onChange={handleChange}
             value={inputsValue.taskText}
-            placeholder="Describe de Task..."
+            placeholder="Describe the Task..."
             isInvalid={formErrors.taskText}
           />
           <Form.Control.Feedback type="invalid">
