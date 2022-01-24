@@ -31,8 +31,6 @@ REACT_APP_URI_TASK=http://localhost:8000/app
 #REACT_APP_URI_TASK=https://task1.loca.lt
 ```
 
-The book is completely **free** for my students (if you want to read it, just write to me).
-
 ### Kong config
 
 ```
@@ -118,3 +116,5 @@ REACT_APP_URI_TASK=https://task1.loca.lt
 ### Enjoy
 
 Navigate to https://web-epm.loca.lt/
+
+The book is completely **free** for my students (if you want to read it, just write to me).
