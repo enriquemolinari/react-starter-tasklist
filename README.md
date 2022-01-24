@@ -59,23 +59,20 @@ services:
 
 ```
 server {
-        listen 8000;
-        listen [::]:8000;
+  listen 8000;
+  listen [::]:8000;
 
-        access_log /var/log/nginx/reverse-access.log;
-        error_log /var/log/nginx/reverse-error.log;
+  location / {
+         proxy_pass http://localhost:3000;
+  }
 
-        location / {
-                    proxy_pass http://localhost:3000;
-        }
+  location /auth/ {
+         proxy_pass http://localhost:1234/;
+  }
 
-        location /auth/ {
-                    proxy_pass http://localhost:1234/;
-        }
-
-        location /app/ {
-                    proxy_pass http://localhost:1235/;
-        }
+  location /app/ {
+         proxy_pass http://localhost:1235/;
+  }
 }
 ```
 
