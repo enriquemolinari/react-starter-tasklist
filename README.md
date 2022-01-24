@@ -19,7 +19,7 @@ It requires to have it running two services I have wrote: [UserAuth](https://git
 
 ## Using localhost (for your PC)
 
-The pwa app, and the two back-end services must be accessed through a **reverse proxy** to have the same-origin policy and the SameSite=strict cookie working. Locally, I have used [Kong](https://konghq.com/install/#kong-community), if you want to use the same, below you will find sample configuration. Make sure the `.env` file is pointing to the correct reserse proxy port. Below is a sample using port 8000.
+The pwa app, and the two back-end services must be accessed through a **reverse proxy** to have the same-origin policy and the SameSite=strict cookie working. Below I have provided configuration files for [Kong](https://konghq.com/install/#kong-community) and [Nginx](https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/) if you want to use any of those. Make sure the `.env` file is pointing to the correct reserse proxy port. Below is a sample using port 8000.
 
 ```
 # for simple localhost
@@ -55,6 +55,30 @@ services:
   - name: frontend-route
     paths:
     - /
+```
+
+### Nginx config
+
+```
+server {
+        listen 8000;
+        listen [::]:8000;
+
+        access_log /var/log/nginx/reverse-access.log;
+        error_log /var/log/nginx/reverse-error.log;
+
+        location / {
+                    proxy_pass http://localhost:3000;
+        }
+
+        location /auth/ {
+                    proxy_pass http://localhost:1234/;
+        }
+
+        location /app/ {
+                    proxy_pass http://localhost:1235/;
+        }
+}
 ```
 
 ## Using LocalTunnel (for your mobile or PC)
