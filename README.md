@@ -98,6 +98,8 @@ And for the [TaskList](https://github.com/enriquemolinari/tasklist) service:
 
 `lt --port 1235 --subdomain task1`
 
+After setting this up, to enable it, open a browser and navigate to each URL: https://web-epm.loca.lt, https://auth1.loca.lt and https://task1.loca.lt. You will have to read a friendly reminder and click a button to proceed.
+
 Finally, make sure the `.env` file is pointing to the correct tunnel URLs for each service. Below is how they should be:
 
 ```
