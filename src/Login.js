@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { Card } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import InputGroup from "react-bootstrap/InputGroup";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { users as usersService } from "./server/users.js";
 
 export default function Login(props) {
@@ -15,7 +15,7 @@ export default function Login(props) {
     msg: "",
     error: false,
   });
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.style.backgroundColor = "#e9ecef";
@@ -40,7 +40,7 @@ export default function Login(props) {
           error: false,
         });
 
-        history.push("/");
+        navigate("/");
       })
       .catch((v) => {
         setErrorResponse(v);
