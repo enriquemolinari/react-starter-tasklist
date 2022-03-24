@@ -2,7 +2,7 @@
 
 ![pwa-task-screenshot](https://user-images.githubusercontent.com/11150895/149962394-3423124c-8d6c-4326-8164-b861c0d4f39b.png)
 
-The Starter Task List React App is a **React** application that we will use during the learning path in my book [Implementing PWA with React](https://leanpub.com/understandingreact) (not yet published), to transform it into a PWA.
+The Starter Task List React App is a **React** application that we will use during the learning path in my book [Implementing PWA with React](https://leanpub.com/pwawithreact), to transform it into a PWA.
 
 It requires to have it running two services I have wrote: [UserAuth](https://github.com/enriquemolinari/userauth) and [TaskList](https://github.com/enriquemolinari/tasklist). Both services are pretty easy to start, with minimal dependencies.
 
