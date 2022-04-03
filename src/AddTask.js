@@ -26,8 +26,7 @@ export default function AddTask(props) {
         props.handleAddTask();
       })
       .catch((error) => {
-        console.log(error);
-        props.handleErrorAddTasks(error.msg);
+        setFormErrors(error.message);
       });
   }
 

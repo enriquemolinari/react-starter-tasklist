@@ -89,10 +89,13 @@ export let tasks = (function () {
             status: 401,
             msg: "You are not authenticated",
           });
-        if (!r.ok) Promise.reject(r.status);
+        if (!r.ok) return Promise.reject(r.status);
         return r.json();
       })
-      .then((json) => Promise.resolve(json))
+      .then((json) => {
+        if (json.result === "error") return Promise.reject(json);
+        return Promise.resolve(json);
+      })
       .catch((e) => Promise.reject(e));
   }
 
